@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberShop Pro - Sistema de Gestión</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/imagen1.png') no-repeat center center/cover;
+        }
+        .services-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/imagen2.png') no-repeat center center/cover;
+        }
+        .booking-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../img/imagen3.png') no-repeat center center/cover;
+        }
+        .testimonials-section {
+            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.85)), url('../img/imagen4.png') no-repeat center center/cover;
+        }
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .service-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .barber-card {
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .barber-card:hover {
+            transform: scale(1.03);
+        }
+        .barber-image {
+            height: 280px;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-900 text-white shadow-lg fixed w-full z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <i class="fas fa-cut text-2xl mr-2 text-blue-300"></i>
+                    <span class="font-semibold text-xl title-font">BarberShop Pro</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="hover:text-blue-300 transition nav-link" data-target="home">Inicio</a>
+                    <a href="#" class="hover:text-blue-300 transition nav-link" data-target="services">Servicios</a>
+                    <a href="#" class="hover:text-blue-300 transition nav-link" data-target="barbers">Barberos</a>
+                    <a href="#" class="hover:text-blue-300 transition nav-link" data-target="booking">Reservar</a>
+                    <a href="#" class="hover:text-blue-300 transition nav-link" data-target="testimonials">Testimonios</a>
+                    <a href="#" class="hover:text-blue-300 transition nav-link" data-target="dashboard">Dashboard</a>
+                </div>
+                
+                <div class="flex items-center">
+                    <button id="loginBtn" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded transition flex items-center">
+                        <i class="fas fa-user-circle mr-2"></i> Iniciar Sesión
+                    </button>
+                    <button id="logoutBtn" class="hidden bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition ml-2">
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <section id="home" class="content-section hero-section text-white py-20">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 title-font">Experiencia Premium en Barbería</h1>
+                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">Sistema de gestión para barberías. Agenda citas, gestiona servicios y mantén tu negocio organizado.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                  <button class="bg-blue-700 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition flex items-center justify-center nav-link" data-target="booking">
+                         <i class="fas fa-calendar-check mr-2"></i> Reservar Cita
+                  </button>
+                    <a href="#" class="bg-transparent hover:bg-blue-800 text-white border-2 border-white px-8 py-3 rounded-lg font-semibold text-lg transition nav-link" data-target="services">
+                       Ver Servicios
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="content-section hidden services-section py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center title-font">Nuestros Servicios</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Ofrecemos una amplia gama de servicios de barbería con los más altos estándares de calidad.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden service-card">
+                        <div class="h-48 bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-cut text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Corte de Cabello</h3>
+                            <p class="text-gray-600 mb-4">Corte moderno y elegante con las últimas tendencias.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-bold text-blue-700">$15.000</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">30 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden service-card">
+                        <div class="h-48 bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-air-freshener text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Corte y Barba</h3>
+                            <p class="text-gray-600 mb-4">Combo completo para look renovado y cuidado facial.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-bold text-blue-700">$25.000</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">60 min</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden service-card">
+                        <div class="h-48 bg-gray-800 flex items-center justify-center">
+                            <i class="fas fa-spa text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">Arreglo de Barba</h3>
+                            <p class="text-gray-600 mb-4">Diseño y mantenimiento profesional de barba.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-bold text-blue-700">$12.000</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">25 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button class="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
+                        Ver Todos Los Servicios
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Barbers Section -->
+        <section id="barbers" class="content-section hidden bg-gray-100 py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center title-font">Nuestros Barberos</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Conoce a nuestro talentoso equipo de barberos profesionales.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden barber-card">
+                        <img src="../img/imagen6.png" alt="Barbero 1" class="barber-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">Juan Pérez</h3>
+                            <p class="text-blue-600 mb-4">Especialista en cortes modernos</p>
+                            <p class="text-gray-600">Con más de 10 años de experiencia, Juan es especialista en tendencias actuales y cortes clásicos.</p>
+                            <div class="flex mt-4">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ml-2 text-gray-600">4.8 (127 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden barber-card">
+                        <img src="../img/imagen7.png" alt="Barbero 2" class="barber-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">Carlos Rodríguez</h3>
+                            <p class="text-blue-600 mb-4">Experto en barbas</p>
+                            <p class="text-gray-600">Carlos se especializa en el cuidado y diseño de barbas, con técnicas innovadoras y productos premium.</p>
+                            <div class="flex mt-4">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ml-2 text-gray-600">5.0 (98 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden barber-card">
+                        <img src="../img/imagen8.png" alt="Barbero 3" class="barber-image">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-1">Miguel Sánchez</h3>
+                            <p class="text-blue-600 mb-4">Maestro barbero</p>
+                            <p class="text-gray-600">Con 15 años de experiencia, Miguel domina todas las técnicas de barbería tradicional y moderna.</p>
+                            <div class="flex mt-4">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="ml-2 text-gray-600">4.9 (156 reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="content-section hidden booking-section py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center title-font">Reserva tu Cita</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Elige tu servicio, barbero y horario preferido.</p>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-12 max-w-4xl mx-auto">
+                    <form id="bookingForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Servicio</label>
+                            <select class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>Corte de Cabello - $15.000</option>
+                                <option>Corte y Barba - $25.000</option>
+                                <option>Arreglo de Barba - $12.000</option>
+                                <option>Peinado Especial - $18.000</option>
+                                <option>Tratamiento Capilar - $20.000</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Barbero</label>
+                            <select class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>Juan Pérez</option>
+                                <option>Carlos Rodríguez</option>
+                                <option>Miguel Sánchez</option>
+                                <option>Cualquier barbero disponible</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Fecha</label>
+                            <input type="date" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-medium">Hora</label>
+                            <select class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>9:00 AM</option>
+                                <option>10:00 AM</option>
+                                <option>11:00 AM</option>
+                                <option>2:00 PM</option>
+                                <option>3:00 PM</option>
+                                <option>4:00 PM</option>
+                                <option>5:00 PM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="block text-gray-700 mb-2 font-medium">Notas adicionales (opcional)</label>
+                            <textarea class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3" placeholder="Especificaciones especiales para tu servicio..."></textarea>
+                        </div>
+                        
+                        <div class="md:col-span-2 flex justify-center mt-4">
+                            <button type="submit" class="bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition flex items-center">
+                                <i class="fas fa-calendar-check mr-2"></i> Reservar Cita
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="bg-blue-900 text-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Horario de atención</h3>
+                    <ul class="space-y-2 text-center">
+                        <li class="flex justify-between max-w-md mx-auto">
+                            <span class="font-medium">Lunes - Viernes:</span>
+                            <span>9:00 AM - 7:00 PM</span>
+                        </li>
+                        <li class="flex justify-between max-w-md mx-auto">
+                            <span class="font-medium">Sábados:</span>
+                            <span>9:00 AM - 5:00 PM</span>
+                        </li>
+                        <li class="flex justify-between max-w-md mx-auto">
+                            <span class="font-medium">Domingos:</span>
+                            <span>Cerrado</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="content-section hidden testimonials-section text-white py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center title-font">Lo que Dicen Nuestros Clientes</h2>
+                <p class="text-center mb-12 max-w-2xl mx-auto">La satisfacción de nuestros clientes es nuestra mayor prioridad.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-blue-800 bg-opacity-50 p-6 rounded-xl">
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="italic mb-4">"La mejor experiencia de barbería que he tenido. Carlos es un artista con la navaja."</p>
+                        <div class="flex items-center">
+                            <div class="h-12 w-12 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Cliente" class="h-full w-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Roberto González</h4>
+                                <p class="text-blue-200">Cliente frecuente</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-800 bg-opacity-50 p-6 rounded-xl">
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="italic mb-4">"Sistema de reservas muy fácil de usar. Siempre encuentro un horario que se adapta a mi agenda."</p>
+                        <div class="flex items-center">
+                            <div class="h-12 w-12 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Cliente" class="h-full w-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Javier López</h4>
+                                <p class="text-blue-200">Cliente por 2 años</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-800 bg-opacity-50 p-6 rounded-xl">
+                        <div class="flex text-yellow-400 mb-4">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="italic mb-4">"Ambiente increíble, atención de primera y siempre salgo luciendo mejor de lo que esperaba."</p>
+                        <div class="flex items-center">
+                            <div class="h-12 w-12 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                                <img src="../img/imagen5.png" alt="Cliente" class="h-full w-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Daniel Martínez</h4>
+                                <p class="text-blue-200">Nuevo cliente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section hidden bg-gray-100 py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center title-font">Dashboard</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Panel de control para administrar tu barbería.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-600">Citas Hoy</p>
+                                <h3 class="text-3xl font-bold mt-2">8</h3>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <i class="fas fa-calendar-day text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-600">Ingresos Mensuales</p>
+                                <h3 class="text-3xl font-bold mt-2">$1,240,000</h3>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-600">Clientes Nuevos</p>
+                                <h3 class="text-3xl font-bold mt-2">12</h3>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-full">
+                                <i class="fas fa-users text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Citas de la Semana</h3>
+                        <canvas id="appointmentsChart" height="250"></canvas>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold mb-4">Servicios Populares</h3>
+                        <canvas id="servicesChart" height="250"></canvas>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-semibold mb-4">Próximas Citas</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="px-4 py-3 text-left">Cliente</th>
+                                    <th class="px-4 py-3 text-left">Servicio</th>
+                                    <th class="px-4 py-3 text-left">Barbero</th>
+                                    <th class="px-4 py-3 text-left">Fecha/Hora</th>
+                                    <th class="px-4 py-3 text-left">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3">Carlos Mendoza</td>
+                                    <td class="px-4 py-3">Corte y Barba</td>
+                                    <td class="px-4 py-3">Juan Pérez</td>
+                                    <td class="px-4 py-3">Hoy, 10:00 AM</td>
+                                    <td class="px-4 py-3"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Confirmada</span></td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="px-4 py-3">Miguel Torres</td>
+                                    <td class="px-4 py-3">Corte de Cabello</td>
+                                    <td class="px-4 py-3">Carlos Rodríguez</td>
+                                    <td class="px-4 py-3">Hoy, 11:30 AM</td>
+                                    <td class="px-4 py-3"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">En espera</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">Andrés López</td>
+                                    <td class="px-4 py-3">Arreglo de Barba</td>
+                                    <td class="px-4 py-3">Miguel Sánchez</td>
+                                    <td class="px-4 py-3">Hoy, 3:00 PM</td>
+                                    <td class="px-4 py-3"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Pendiente</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Modal -->
+        <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-20">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4">
+        <div class="p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center title-font">Iniciar Sesión</h3>
+            <form id="loginForm">
+                <div class="mb-5">
+                    <label class="block text-gray-700 mb-2 font-medium">Correo electrónico</label>
+                    <input type="email" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2 font-medium">Contraseña</label>
+                    <input type="password" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                
+                <div class="flex items-center justify-between mb-5">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" class="mr-2">
+                        <label for="remember" class="text-gray-700">Recordarme</label>
+                    </div>
+                    <a href="#" class="text-blue-600 hover:underline">¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Iniciar Sesión</button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">¿No tienes una cuenta? <a href="#" id="registerLink" class="text-blue-600 hover:underline">Regístrate</a></p>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-200 p-5 bg-gray-50 rounded-b-xl">
+            <button id="closeLoginModal" class="w-full py-2 text-gray-600 hover:text-gray-800 font-medium">Cancelar</button>
+        </div>
+    </div>
+</div>
+<div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-20">
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4">
+        <div class="p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center title-font">Regístrate</h3>
+            <form id="registerForm">
+                </form>
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">¿Ya tienes una cuenta? <a href="#" id="loginLink" class="text-blue-600 hover:underline">Inicia sesión</a></p>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 p-5 bg-gray-50 rounded-b-xl">
+            <button id="closeRegisterModal" class="w-full py-2 text-gray-600 hover:text-gray-800 font-medium">Cancelar</button>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 title-font">BarberShop Pro</h3>
+                    <p class="text-gray-400">Sistema de gestión para barberías. Agenda citas, gestiona servicios y mantén tu negocio organizado.</p>
+                    <div class="flex mt-4 space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Inicio</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Servicios</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Barberos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Reservar Cita</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Servicios</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Corte de Cabello</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Arreglo de Barba</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Corte y Barba</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Tratamientos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contacto</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">Calle 123, Ciudad</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">+57 123 456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-gray-400"></i>
+                            <span class="text-gray-400">info@barbershoppro.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 BarberShop Pro. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            // Show home section by default
+            document.getElementById('home').classList.remove('hidden');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('data-target');
+                    
+                    // Hide all sections
+                    contentSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // Show target section
+                    document.getElementById(target).classList.remove('hidden');
+                    
+                    // Update active nav link
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('text-blue-300');
+                    });
+                    this.classList.add('text-blue-300');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+           // Login Modal
+    const loginModal = document.getElementById('loginModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const closeLoginModal = document.getElementById('closeLoginModal'); // Renombrado para evitar conflictos
+
+    // Register Modal
+    const registerModal = document.getElementById('registerModal');
+    const registerLink = document.getElementById('registerLink');
+    const loginLink = document.getElementById('loginLink');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+
+    loginBtn.addEventListener('click', function() {
+        loginModal.classList.remove('hidden');
+    });
+
+    closeLoginModal.addEventListener('click', function() {
+        loginModal.classList.add('hidden');
+    });
+
+    // Cambiar de login a registro
+    registerLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        loginModal.classList.add('hidden');
+        registerModal.classList.remove('hidden');
+    });
+
+    // Cambiar de registro a login
+    loginLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        registerModal.classList.add('hidden');
+        loginModal.classList.remove('hidden');
+    });
+
+    closeRegisterModal.addEventListener('click', function() {
+        registerModal.classList.add('hidden');
+    });
+    
+    // Simular el inicio de sesión
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        loginModal.classList.add('hidden');
+        loginBtn.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        alert('¡Has iniciado sesión correctamente!');
+    });
+    
+    // Simular el cierre de sesión
+    logoutBtn.addEventListener('click', function() {
+        loginBtn.classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+        alert('¡Has cerrado sesión!');
+    });
+            
+            // Charts
+            const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
+            const appointmentsChart = new Chart(appointmentsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                    datasets: [{
+                        label: 'Citas por día',
+                        data: [12, 19, 8, 15, 14, 16],
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+            const servicesChart = new Chart(servicesCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Corte de Cabello', 'Corte y Barba', 'Arreglo de Barba', 'Peinado'],
+                    datasets: [{
+                        data: [45, 25, 20, 10],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(153, 102, 255, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+            
+            // Booking form
+            const bookingForm = document.getElementById('bookingForm');
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('¡Cita reservada con éxito! Te hemos enviado un correo de confirmación.');
+                bookingForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
